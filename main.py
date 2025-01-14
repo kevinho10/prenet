@@ -11,6 +11,7 @@ from torch.optim import lr_scheduler
 import torch.backends.cudnn as cudnn
 import re
 from utils import *
+import model
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
