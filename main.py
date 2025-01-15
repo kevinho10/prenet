@@ -11,7 +11,7 @@ from torch.optim import lr_scheduler
 import torch.backends.cudnn as cudnn
 import re
 from utils import *
-import model
+import __main__
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
@@ -178,8 +178,8 @@ def main():
     net = load_model('resnet50',pretrain=False,require_grad=True,num_class=NUM_CATEGORIES)
     net.fc = nn.Linear(2048, 2000)
     state_dict = {}
-    print(f'no no \n{torch.serialization.get_unsafe_globals(args.weight_path)}')
-    pretrained = torch.load(args.weight_path, weights_only=True)
+    __main__.model = model
+    pretrained = torch.load(args.weight_path)
 
     for k, v in net.state_dict().items():
         if k[9:] in pretrained.keys() and "fc" not in k:
