@@ -163,7 +163,7 @@ def train(nb_epoch, trainloader, testloader, batch_size, store_name, start_epoch
                     epoch, val_acc, val5_acc, val_acc_com, val5_acc_com, val_loss))
 
 def PMG(): 
-    dump_patches
+    dump_patches = null
     return
 model.PMG = PMG
 def main():
