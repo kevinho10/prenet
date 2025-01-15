@@ -11,7 +11,7 @@ from torch.optim import lr_scheduler
 import torch.backends.cudnn as cudnn
 import re
 from utils import *
-import __main__
+import model
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
@@ -163,7 +163,7 @@ def train(nb_epoch, trainloader, testloader, batch_size, store_name, start_epoch
                     epoch, val_acc, val5_acc, val_acc_com, val5_acc_com, val_loss))
 
 def PMG(): return
-__main__.PMG = PMG
+model.PMG = PMG
 def main():
     args = parse_option()
     train_dataset, train_loader, test_dataset, test_loader = \
