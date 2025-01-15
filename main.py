@@ -12,7 +12,6 @@ import torch.backends.cudnn as cudnn
 import re
 from utils import *
 import __main__
-import model as mod
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
@@ -163,6 +162,8 @@ def train(nb_epoch, trainloader, testloader, batch_size, store_name, start_epoch
                 'Iteration %d, top1 = %.5f, top5 = %.5f, top1_combined = %.5f, top5_combined = %.5f, test_loss = %.6f\n' % (
                     epoch, val_acc, val5_acc, val_acc_com, val5_acc_com, val_loss))
 
+def PMG(): return
+__main__.PMG = PMG
 def main():
     args = parse_option()
     train_dataset, train_loader, test_dataset, test_loader = \
@@ -179,7 +180,6 @@ def main():
     net = load_model('resnet50',pretrain=False,require_grad=True,num_class=NUM_CATEGORIES)
     net.fc = nn.Linear(2048, 2000)
     state_dict = {}
-    __main__.model = mod
     pretrained = torch.load(args.weight_path)
 
     for k, v in net.state_dict().items():
