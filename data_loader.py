@@ -32,7 +32,7 @@ class MyDataset(torch.utils.data.Dataset):
         # print label
         # print type(label)
         #img = self.loader('/home/vipl/llh/food101_finetuning/food101_vgg/origal_data/images/'+img_name.replace("\\","/"))
-        img = self.loader(self.image_path + img_name)
+        img = self.loader(self.image_path + '/' + img_name)
 
         # print img
         if self.transform is not None:
