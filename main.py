@@ -215,9 +215,9 @@ def main():
 
     if args.use_checkpoint:
         #net.load_state_dict(torch.load(checkpath))
-        model = torch.load(args.checkpoint).module.state_dict()
+        #model = torch.load(args.checkpoint).module.state_dict()
 
-        net.module.load_state_dict(torch.load(args.checkpoint).module.state_dict())
+        #net.module.load_state_dict(torch.load(args.checkpoint).module.state_dict())
         print('load the checkpoint')
 
     if args.test:
