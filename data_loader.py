@@ -3,6 +3,7 @@ import PIL
 from PIL import Image
 import torch.utils.data as data
 from torchvision import datasets, transforms
+import os
 
 def My_loader(path):
     return PIL.Image.open(path).convert('RGB')
@@ -32,7 +33,7 @@ class MyDataset(torch.utils.data.Dataset):
         # print label
         # print type(label)
         #img = self.loader('/home/vipl/llh/food101_finetuning/food101_vgg/origal_data/images/'+img_name.replace("\\","/"))
-        img = self.loader(self.image_path + '/' + img_name + '/' + str(label))
+        img = self.loader(os.path.normpath(self.image_path + '/' + img_name + '/' + str(label)))
 
         # print img
         if self.transform is not None:
