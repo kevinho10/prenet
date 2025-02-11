@@ -175,7 +175,7 @@ def main():
 
 
     net = load_model('resnet50',pretrain=False,require_grad=True,num_class=NUM_CATEGORIES)
-    net.fc = nn.Linear(2048, 2000)
+    #net.fc = nn.Linear(2048, 2000)
     '''state_dict = {}
     pretrained = torch.load(args.weight_path)
 
@@ -190,6 +190,7 @@ def main():
 
     net.load_state_dict(state_dict)'''
     net.fc = nn.Linear(2048, NUM_CATEGORIES)
+    print('NUM: ' + NUM_CATEGORIES)
 
     ignored_params = list(map(id, net.features.parameters()))
     new_params = filter(lambda p: id(p) not in ignored_params, net.parameters())
