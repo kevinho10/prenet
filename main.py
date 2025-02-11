@@ -74,7 +74,9 @@ def train(nb_epoch, trainloader, testloader, batch_size, store_name, start_epoch
             if inputs.shape[0] < batch_size:
                 continue
             inputs, targets = inputs.cuda(), targets.cuda()
+            print(f"target {targets}")
             inputs, targets = Variable(inputs), Variable(targets)
+            print(f"tar2 {targets}")
 
             # Step 1
             optimizer.zero_grad()
@@ -175,7 +177,7 @@ def main():
 
 
     net = load_model('resnet50',pretrain=False,require_grad=True,num_class=NUM_CATEGORIES)
-    #net.fc = nn.Linear(2048, 2000)
+    net.fc = nn.Linear(2048, 2000)
     '''state_dict = {}
     pretrained = torch.load(args.weight_path)
 
@@ -190,7 +192,6 @@ def main():
 
     net.load_state_dict(state_dict)'''
     net.fc = nn.Linear(2048, NUM_CATEGORIES)
-    print('NUM: ' + str(NUM_CATEGORIES))
 
     ignored_params = list(map(id, net.features.parameters()))
     new_params = filter(lambda p: id(p) not in ignored_params, net.parameters())

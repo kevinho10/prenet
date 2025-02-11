@@ -11,11 +11,14 @@ from Resnet import *
 
 def load_model(model_name, pretrain=True, require_grad=True, num_class=1000, pretrained_model=None):
     print('==> Building model..')
+    print('classes: ' + str(num_class))
     if model_name == 'resnet50':
         net = resnet50(pretrained=pretrain, path=pretrained_model)
+        print('res')
         #for param in net.parameters():
             #param.requires_grad = require_grad
         net = PRENet(net, 512, num_class)
+        print('pre')
 
     return net
 
