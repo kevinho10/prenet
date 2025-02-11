@@ -190,7 +190,7 @@ def main():
 
     net.load_state_dict(state_dict)'''
     net.fc = nn.Linear(2048, NUM_CATEGORIES)
-    print('NUM: ' + NUM_CATEGORIES)
+    print('NUM: ' + str(NUM_CATEGORIES))
 
     ignored_params = list(map(id, net.features.parameters()))
     new_params = filter(lambda p: id(p) not in ignored_params, net.parameters())
