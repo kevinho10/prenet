@@ -188,8 +188,8 @@ def main():
             state_dict[k] = v
             print(k)
 
-    net.load_state_dict(state_dict)
-    net.fc = nn.Linear(2048, NUM_CATEGORIES)'''
+    net.load_state_dict(state_dict)'''
+    net.fc = nn.Linear(2048, NUM_CATEGORIES)
 
     ignored_params = list(map(id, net.features.parameters()))
     new_params = filter(lambda p: id(p) not in ignored_params, net.parameters())
@@ -203,7 +203,7 @@ def main():
     for p in optimizer.param_groups:
         outputs = ''
         for k, v in p.items():
-            if k is 'params':
+            if k == 'params':
                 outputs += (k + ': ' + str(v[0].shape).ljust(30) + ' ')
             else:
                 outputs += (k + ': ' + str(v).ljust(10) + ' ')
