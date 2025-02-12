@@ -41,7 +41,7 @@ class MyDataset(torch.utils.data.Dataset):
             # label =torch.Tensor(label)
 
             # print label.size()
-        return img, label
+        return img, img_name
         # if the label is the single-label it can be the int
         # if the multilabel can be the list to torch.tensor
 
