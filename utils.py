@@ -11,14 +11,11 @@ from Resnet import *
 
 def load_model(model_name, pretrain=True, require_grad=True, num_class=1000, pretrained_model=None):
     print('==> Building model..')
-    print('classes: ' + str(num_class))
     if model_name == 'resnet50':
         net = resnet50(pretrained=pretrain, path=pretrained_model)
-        print('res')
         #for param in net.parameters():
             #param.requires_grad = require_grad
         net = PRENet(net, 512, num_class)
-        print('pre')
 
     return net
 
@@ -59,6 +56,7 @@ def test(net, criterion, batch_size, testloader,useattn):
     for (inputs, targets) in tqdm(testloader):
         idx = batch_idx
         with torch.no_grad():
+            targets = targets.type(torch.LongTensor)
             inputs, targets = inputs.cuda(), targets.cuda()
             inputs, targets = Variable(inputs), Variable(targets)
             _, _, _, output_concat, output1, output2, output3 = net(inputs,useattn)
