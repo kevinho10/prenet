@@ -24,7 +24,7 @@ def parse_option():
     parser.add_argument("--test_path", type=str, default="Documents/food101/meta_data/test_full.txt",
                         help='path to testing list')
     parser.add_argument('--weight_path', default="Downloads/food2k_resnet50_0.0001.pth", help='path to the pretrained model')
-    parser.add_argument('--use_checkpoint', action='store_true', default=True,
+    parser.add_argument('--use_checkpoint', action='store_true',
                         help="whether to use gradient checkpointing to save memory")
     parser.add_argument('--checkpoint', type=str, default="E:/Pretrained_model/model.pth",
                         help="the path to checkpoint")
@@ -34,7 +34,7 @@ def parse_option():
                         help="The initial learning rate for SGD.")
     parser.add_argument("--epoch", default=200, type=int,
                         help="The number of epochs.")
-    parser.add_argument("--test", action='store_true', default=True,
+    parser.add_argument("--test", action='store_true',
                         help="Testing model.")
     args, unparsed = parser.parse_known_args()
     return args
