@@ -15,7 +15,7 @@ class MyDataset(torch.utils.data.Dataset):
         for line in data_txt:
             line = line.strip()
             words = line.split('/')
-            imgs.append((words[0], int(words[1].strip())))
+            imgs.append((words[0], words[1], int(words[2].strip())))
         self.imgs = imgs
         self.transform = transform
         self.target_transform = target_transform
@@ -27,12 +27,12 @@ class MyDataset(torch.utils.data.Dataset):
         return len(self.imgs)
 
     def __getitem__(self, index):
-        img_name, label = self.imgs[index]
+        img_name, file_num, label = self.imgs[index]
         # label = list(map(int, label))
         # print label
         # print type(label)
         #img = self.loader('/home/vipl/llh/food101_finetuning/food101_vgg/origal_data/images/'+img_name.replace("\\","/"))
-        img = self.loader(self.image_path + '/' + img_name + '/' + str(label) + '.jpg')
+        img = self.loader(self.image_path + '/' + img_name + '/' + file_num + '.jpg')
 
         # print img
         if self.transform is not None:
@@ -41,7 +41,7 @@ class MyDataset(torch.utils.data.Dataset):
             # label =torch.Tensor(label)
 
             # print label.size()
-        return img, img_name
+        return img, label
         # if the label is the single-label it can be the int
         # if the multilabel can be the list to torch.tensor
 
