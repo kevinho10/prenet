@@ -213,7 +213,7 @@ def main():
 
     cudnn.benchmark = True
     net.cuda()
-    #net = nn.DataParallel(net)
+    net = nn.DataParallel(net)
 
     if args.use_checkpoint:
         #net.load_state_dict(torch.load(checkpath))

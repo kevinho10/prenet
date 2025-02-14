@@ -41,7 +41,7 @@ class self_attention(nn.Module):
         v = self.split_heads_2d(v, Nh)
 
         dkh = dk // Nh
-        q *= dkh ** -0.5
+        q = q*(dkh ** -0.5)
         flat_q = torch.reshape(q, (N, Nh, dq // Nh, H * W))
         flat_k = torch.reshape(k, (N, Nh, dk // Nh, H * W))
         flat_v = torch.reshape(v, (N, Nh, dv // Nh, H * W))
