@@ -56,7 +56,7 @@ def test(net, criterion, batch_size, testloader,useattn):
     for (inputs, targets) in tqdm(testloader):
         idx = batch_idx
         with torch.no_grad():
-            targets = targets.type(torch.LongTensor)
+            #targets = targets.type(torch.LongTensor)
             inputs, targets = inputs.cuda(), targets.cuda()
             inputs, targets = Variable(inputs), Variable(targets)
             _, _, _, output_concat, output1, output2, output3 = net(inputs,useattn)
