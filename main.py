@@ -157,7 +157,11 @@ def train(nb_epoch, trainloader, testloader, batch_size, store_name, start_epoch
         val_acc, val5_acc, val_acc_com, val5_acc_com, val_loss = test(net, CELoss, batch_size, testloader,True)
         if val_acc > max_val_acc:
             max_val_acc = val_acc
-            torch.save(net, './' + store_name + '/model.pth')
+            torch.save({
+                'epoch': epoch,
+                'model_state_dict': net.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'loss': train_loss}, './' + store_name + '/model.pth')
         with open(exp_dir + '/results_test.txt', 'a') as file:
             file.write(
                 'Iteration %d, top1 = %.5f, top5 = %.5f, top1_combined = %.5f, top5_combined = %.5f, test_loss = %.6f\n' % (
