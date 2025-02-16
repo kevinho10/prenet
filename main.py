@@ -233,7 +233,7 @@ def main():
              trainloader=train_loader,
              testloader=test_loader,
              batch_size=args.batchsize,         # batch size
-             store_name='model_448_from2k',     # folder for output
+             store_name='drive/MyDrive/Colab Notebooks/checkpoints',     # folder for output
              start_epoch=0,
              net=net,
             optimizer = optimizer,
