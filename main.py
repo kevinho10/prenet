@@ -182,7 +182,8 @@ def main():
 
     net = load_model('resnet50',pretrain=False,require_grad=True,num_class=NUM_CATEGORIES)
     net.fc = nn.Linear(2048, 2000)
-    '''state_dict = {}
+    state_dict = {}
+    torch.serialization.add_safe_globals([nn.DataParallel])
     pretrained = torch.load(args.weight_path)
 
     for k, v in net.state_dict().items():
@@ -194,7 +195,7 @@ def main():
             state_dict[k] = v
             print(k)
 
-    net.load_state_dict(state_dict)'''
+    net.load_state_dict(state_dict)
     net.fc = nn.Linear(2048, NUM_CATEGORIES)
 
     ignored_params = list(map(id, net.features.parameters()))
@@ -220,10 +221,10 @@ def main():
     net = nn.DataParallel(net)
 
     if args.use_checkpoint:
-        #net.load_state_dict(torch.load(checkpath))
-        #model = torch.load(args.checkpoint).module.state_dict()
+        net.load_state_dict(torch.load(checkpath))
+        model = torch.load(args.checkpoint).module.state_dict()
 
-        #net.module.load_state_dict(torch.load(args.checkpoint).module.state_dict())
+        net.module.load_state_dict(torch.load(args.checkpoint).module.state_dict())
         print('load the checkpoint')
 
     if args.test:
