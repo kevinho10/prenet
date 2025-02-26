@@ -172,8 +172,9 @@ def train(nb_epoch, trainloader, testloader, batch_size, store_name, start_epoch
                     epoch, val_acc, val5_acc, val_acc_com, val5_acc_com, val_loss))
 
 class PMG(nn.Module):
-    model.PMG = PMG
     torch.nn.Module.dump_patches = True
+
+model.PMG = PMG
 def main():
     args = parse_option()
     if args.train:
