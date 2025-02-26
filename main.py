@@ -193,7 +193,6 @@ def main():
     net = load_model('resnet50',pretrain=False,require_grad=True,num_class=NUM_CATEGORIES)
     net.fc = nn.Linear(2048, 2000)
     state_dict = {}
-    torch.serialization.add_safe_globals([nn.DataParallel])
     pretrained = torch.load(args.weight_path)
 
     for k, v in net.state_dict().items():
