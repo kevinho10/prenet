@@ -12,6 +12,7 @@ import torch.backends.cudnn as cudnn
 import re
 from utils import *
 from torchvision import transforms
+import model
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
