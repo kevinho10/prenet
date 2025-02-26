@@ -11,6 +11,7 @@ from torch.optim import lr_scheduler
 import torch.backends.cudnn as cudnn
 import re
 from utils import *
+from torchvision import transforms
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
@@ -36,6 +37,9 @@ def parse_option():
                         help="The number of epochs.")
     parser.add_argument("--test", action='store_true',
                         help="Testing model.")
+    parser.add_argument("--train", action='store_true',
+                        help="Train model.")
+    parser.add_argument("--food_img", help="Path to food image to predict.")
     args, unparsed = parser.parse_known_args()
     return args
 
@@ -169,9 +173,10 @@ def train(nb_epoch, trainloader, testloader, batch_size, store_name, start_epoch
 
 def main():
     args = parse_option()
-    train_dataset, train_loader, test_dataset, test_loader = \
-        load_data(image_path=args.image_path, train_dir=args.train_path, test_dir=args.test_path,batch_size=args.batchsize)
-    print('Data Preparation : Finished')
+    if args.train:
+        train_dataset, train_loader, test_dataset, test_loader = \
+            load_data(image_path=args.image_path, train_dir=args.train_path, test_dir=args.test_path,batch_size=args.batchsize)
+        print('Data Preparation : Finished')
     if args.dataset == "food101":
         NUM_CATEGORIES = 101
     elif args.dataset == "food500":
@@ -228,21 +233,40 @@ def main():
         print('load the checkpoint')
 
     if args.test:
-        val_acc, val5_acc, val_acc_com, val5_acc_com, val_loss = test(net, nn.CrossEntropyLoss(), args.batchsize, test_loader, True)
-        print('Accuracy of the network on the val images: top1 = %.5f, top5 = %.5f, top1_combined = %.5f, top5_combined = %.5f, test_loss = %.6f\n' % (
-                val_acc, val5_acc, val_acc_com, val5_acc_com, val_loss))
+        #val_acc, val5_acc, val_acc_com, val5_acc_com, val_loss = test(net, nn.CrossEntropyLoss(), args.batchsize, test_loader, True)
+        #print('Accuracy of the network on the val images: top1 = %.5f, top5 = %.5f, top1_combined = %.5f, top5_combined = %.5f, test_loss = %.6f\n' % (
+        #        val_acc, val5_acc, val_acc_com, val5_acc_com, val_loss))
+        img = PIL.Image.open(food_img).convert('RGB')
+        normalize = transforms.Normalize(mean=[0.5457954, 0.44430383, 0.34424934],
+                                     std=[0.23273608, 0.24383051, 0.24237761])
+        test_transform = transforms.Compose([
+            transforms.Resize((550, 550)),
+            transforms.CenterCrop((448, 448)),
+            transforms.ToTensor(),
+            normalize
+        ])
+        trans_img = test_transform(img)
+
+        net.eval()
+
+        with torch.no_grad():
+
+            _, _, _, output_concat, _, _, _ = net(trans_img,True)
+
+        print(f'image tensor: {trans_img}')
+        print(f'type: {output_concat}')
         return
 
-
-    train(nb_epoch=args.epoch,             # number of epoch
-             trainloader=train_loader,
-             testloader=test_loader,
-             batch_size=args.batchsize,         # batch size
-             store_name='drive/MyDrive/Colab Notebooks/checkpoints',     # folder for output
-             start_epoch=0,
-             net=net,
-            optimizer = optimizer,
-            exp_lr_scheduler=exp_lr_scheduler)         # the start epoch number when you resume the training
+    if args.train:
+        train(nb_epoch=args.epoch,             # number of epoch
+                trainloader=train_loader,
+                testloader=test_loader,
+                batch_size=args.batchsize,         # batch size
+                store_name='drive/MyDrive/Colab Notebooks/checkpoints',     # folder for output
+                start_epoch=0,
+                net=net,
+                optimizer = optimizer,
+                exp_lr_scheduler=exp_lr_scheduler)         # the start epoch number when you resume the training
 
 if __name__ == "__main__":
     main()
