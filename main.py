@@ -171,6 +171,8 @@ def train(nb_epoch, trainloader, testloader, batch_size, store_name, start_epoch
                 'Iteration %d, top1 = %.5f, top5 = %.5f, top1_combined = %.5f, top5_combined = %.5f, test_loss = %.6f\n' % (
                     epoch, val_acc, val5_acc, val_acc_com, val5_acc_com, val_loss))
 
+class PMG(nn.Module):
+
 def main():
     args = parse_option()
     if args.train:
