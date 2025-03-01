@@ -13,6 +13,7 @@ import re
 from utils import *
 from torchvision import transforms
 import model
+import numpy
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
