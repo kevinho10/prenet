@@ -249,7 +249,7 @@ def main():
             transforms.ToTensor(),
             normalize
         ])
-        trans_img = test_transform(img)
+        trans_img = test_transform(img).unsqueeze(0)
 
         net.eval()
 
