@@ -258,6 +258,7 @@ def main():
 
             _, _, _, output_concat, _, _, _ = net(trans_img,True)
 
+        net.cpu()
         print(f'type: {numpy.argmax(output_concat)}')
         return
 
