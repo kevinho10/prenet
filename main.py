@@ -240,7 +240,7 @@ def main():
         #val_acc, val5_acc, val_acc_com, val5_acc_com, val_loss = test(net, nn.CrossEntropyLoss(), args.batchsize, test_loader, True)
         #print('Accuracy of the network on the val images: top1 = %.5f, top5 = %.5f, top1_combined = %.5f, top5_combined = %.5f, test_loss = %.6f\n' % (
         #        val_acc, val5_acc, val_acc_com, val5_acc_com, val_loss))
-        img = PIL.Image.open(food_img).convert('RGB')
+        img = PIL.Image.open(args.food_img).convert('RGB')
         normalize = transforms.Normalize(mean=[0.5457954, 0.44430383, 0.34424934],
                                      std=[0.23273608, 0.24383051, 0.24237761])
         test_transform = transforms.Compose([
