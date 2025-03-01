@@ -198,7 +198,7 @@ def main():
     for k, v in net.state_dict().items():
         if k[9:] in pretrained.module.state_dict().keys() and "fc" not in k:
             state_dict[k] = pretrained[k[9:]]
-        elif "xx" in k and re.sub(r'xx[0-9]\.?',".", k[9:]) in pretrained.keys():
+        elif "xx" in k and re.sub(r'xx[0-9]\.?',".", k[9:]) in pretrained.module.state_dict().keys():
             state_dict[k] = pretrained[re.sub(r'xx[0-9]\.?',".", k[9:])]
         else:
             state_dict[k] = v
