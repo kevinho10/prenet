@@ -257,8 +257,7 @@ def main():
 
             _, _, _, output_concat, _, _, _ = net(trans_img,True)
 
-        print(f'image tensor: {trans_img}')
-        print(f'type: {output_concat}')
+        print(f'type: {numpy.argmax(output_concat)}')
         return
 
     if args.train:
