@@ -79,9 +79,9 @@ class PRENet(nn.Module):
 
         self.Avgmax = nn.AdaptiveMaxPool2d(output_size=(1,1))
 
-        self.attn1_1 = self_attention(self.num_ftrs // 2,self.num_ftrs // 2 * 3, self.dk, self.dq, self.dv, self.Nh)
-        self.attn2_2 = self_attention(self.num_ftrs // 2,self.num_ftrs // 2 * 3, self.dk, self.dq, self.dv, self.Nh)
-        self.attn3_3 = self_attention(self.num_ftrs // 2,self.num_ftrs // 2 * 3, self.dk, self.dq, self.dv, self.Nh)
+        self.attn1_1 = self_attention(self.num_ftrs // 2,self.num_ftrs // 2, self.dk, self.dq, self.dv, self.Nh)
+        self.attn2_2 = self_attention(self.num_ftrs // 2,self.num_ftrs // 2, self.dk, self.dq, self.dv, self.Nh)
+        self.attn3_3 = self_attention(self.num_ftrs // 2,self.num_ftrs // 2, self.dk, self.dq, self.dv, self.Nh)
 
         '''
         self.attn1_2 = layer_self_attention(self.num_ftrs // 2,self.num_ftrs // 2, self.dk, self.dq, self.dv, self.Nh)
@@ -93,9 +93,9 @@ class PRENet(nn.Module):
         self.attn3_2 = layer_self_attention(self.num_ftrs // 2, self.num_ftrs // 2, self.dk, self.dq, self.dv, self.Nh)
         '''
 
-        self.sconv1 = nn.Conv2d((self.num_ftrs // 2), self.num_ftrs // 2, kernel_size= 3, padding= 1)
-        self.sconv2 = nn.Conv2d((self.num_ftrs // 2), self.num_ftrs // 2, kernel_size= 3, padding= 1)
-        self.sconv3 = nn.Conv2d((self.num_ftrs // 2), self.num_ftrs // 2, kernel_size= 3, padding= 1)
+        self.sconv1 = nn.Conv2d((self.num_ftrs // 2), self.num_ftrs // 2 * 3, kernel_size= 3, padding= 1)
+        self.sconv2 = nn.Conv2d((self.num_ftrs // 2), self.num_ftrs // 2 * 3, kernel_size= 3, padding= 1)
+        self.sconv3 = nn.Conv2d((self.num_ftrs // 2), self.num_ftrs // 2 * 3, kernel_size= 3, padding= 1)
         self.drop_block = DropBlock2D(block_size=3, drop_prob=0.5)
 
     def forward(self, x, label):
