@@ -259,6 +259,7 @@ def main():
             _, _, _, output_concat, _, _, _ = net(trans_img,True)
 
         output_concat = output_concat.cpu()
+        print(f'shape: {output_concat.shape}')
         print(f'type: {numpy.argmax(output_concat)}')
         return
 
