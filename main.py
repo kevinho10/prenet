@@ -226,9 +226,9 @@ def main():
                 outputs += (k + ': ' + str(v).ljust(10) + ' ')
         print(outputs)
 
-    cudnn.benchmark = True
-    net.cuda()
-    net = nn.DataParallel(net)
+    #cudnn.benchmark = True
+    #net.cuda()
+    #net = nn.DataParallel(net)
 
     if args.use_checkpoint:
         net.load_state_dict(torch.load(checkpath))
@@ -258,10 +258,6 @@ def main():
 
             _, _, _, output_concat, o1, o2, o3 = net(trans_img,True)
 
-        output_concat = output_concat.cpu()
-        o1 = o1.cpu()
-        o2 = o2.cpu()
-        o3 = o3.cpu()
         print(f'shape: {output_concat.shape}')
         print(f'type: {numpy.argmax(output_concat + o1 + o2 + o3)}')
         return
