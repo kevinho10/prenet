@@ -54,7 +54,7 @@ class PRENet(nn.Module):
         )
 
         self.conv_block2 = nn.Sequential(
-            BasicConv(self.num_ftrs//2*3, feature_size, kernel_size=1, stride=1, padding=0, relu=True),
+            BasicConv(self.num_ftrs//2, feature_size, kernel_size=1, stride=1, padding=0, relu=True),
             BasicConv(feature_size, self.num_ftrs//2, kernel_size=3, stride=1, padding=1, relu=True)
         )
         self.classifier2 = nn.Sequential(
@@ -93,9 +93,9 @@ class PRENet(nn.Module):
         self.attn3_2 = layer_self_attention(self.num_ftrs // 2, self.num_ftrs // 2, self.dk, self.dq, self.dv, self.Nh)
         '''
 
-        self.sconv1 = nn.Conv2d((self.num_ftrs // 2 * 3), self.num_ftrs // 2, kernel_size= 3, padding= 1)
-        self.sconv2 = nn.Conv2d((self.num_ftrs // 2 * 3), self.num_ftrs // 2, kernel_size= 3, padding= 1)
-        self.sconv3 = nn.Conv2d((self.num_ftrs // 2 * 3), self.num_ftrs // 2, kernel_size= 3, padding= 1)
+        self.sconv1 = nn.Conv2d((self.num_ftrs // 2), self.num_ftrs // 2, kernel_size= 3, padding= 1)
+        self.sconv2 = nn.Conv2d((self.num_ftrs // 2), self.num_ftrs // 2, kernel_size= 3, padding= 1)
+        self.sconv3 = nn.Conv2d((self.num_ftrs // 2), self.num_ftrs // 2, kernel_size= 3, padding= 1)
         self.drop_block = DropBlock2D(block_size=3, drop_prob=0.5)
 
     def forward(self, x, label):
