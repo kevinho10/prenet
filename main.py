@@ -251,7 +251,7 @@ def main():
             normalize
         ])
         trans_img = test_transform(img).unsqueeze(0)
-
+        print(f'shape: {trans_img.shape}')
         net.eval()
 
         with torch.no_grad():
