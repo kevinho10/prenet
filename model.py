@@ -54,7 +54,7 @@ class PRENet(nn.Module):
         )
 
         self.conv_block2 = nn.Sequential(
-            BasicConv(self.num_ftrs//2, feature_size, kernel_size=1, stride=1, padding=0, relu=True),
+            BasicConv(self.num_ftrs//2*3, feature_size, kernel_size=1, stride=1, padding=0, relu=True),
             BasicConv(feature_size, self.num_ftrs//2, kernel_size=3, stride=1, padding=1, relu=True)
         )
         self.classifier2 = nn.Sequential(
