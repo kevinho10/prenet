@@ -194,7 +194,7 @@ def main():
     net = load_model('resnet50',pretrain=False,require_grad=True,num_class=NUM_CATEGORIES)
     #net.fc = nn.Linear(2048, 2000)
     state_dict = {}
-    pretrained = torch.load(args.weight_path)
+    pretrained = torch.load(args.weight_path, map_location=torch.device('cpu'))
     '''
     for k, v in net.state_dict().items():
         if k[9:] in pretrained.module.state_dict().keys() and "fc" not in k:
