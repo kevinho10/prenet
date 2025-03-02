@@ -256,11 +256,11 @@ def main():
 
         with torch.no_grad():
 
-            _, _, _, output_concat, _, _, _ = net(trans_img,True)
+            _, _, _, output_concat, o1, o2, o3 = net(trans_img,True)
 
         output_concat = output_concat.cpu()
         print(f'shape: {output_concat.shape}')
-        print(f'type: {numpy.argmax(output_concat)}')
+        print(f'type: {numpy.argmax(output_concat + o1 + o2 + o3)}')
         return
 
     if args.train:
