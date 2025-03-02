@@ -79,9 +79,9 @@ class PRENet(nn.Module):
 
         self.Avgmax = nn.AdaptiveMaxPool2d(output_size=(1,1))
 
-        self.attn1_1 = self_attention(self.num_ftrs // 2,self.num_ftrs // 2, self.dk, self.dq, self.dv, self.Nh)
-        self.attn2_2 = self_attention(self.num_ftrs // 2,self.num_ftrs // 2, self.dk, self.dq, self.dv, self.Nh)
-        self.attn3_3 = self_attention(self.num_ftrs // 2,self.num_ftrs // 2, self.dk, self.dq, self.dv, self.Nh)
+        self.attn1_1 = self_attention(self.num_ftrs // 2,self.num_ftrs // 2 * 3, self.dk, self.dq, self.dv, self.Nh)
+        self.attn2_2 = self_attention(self.num_ftrs // 2,self.num_ftrs // 2 * 3, self.dk, self.dq, self.dv, self.Nh)
+        self.attn3_3 = self_attention(self.num_ftrs // 2,self.num_ftrs // 2 * 3, self.dk, self.dq, self.dv, self.Nh)
 
         '''
         self.attn1_2 = layer_self_attention(self.num_ftrs // 2,self.num_ftrs // 2, self.dk, self.dq, self.dv, self.Nh)
