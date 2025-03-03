@@ -197,10 +197,7 @@ def main():
     pretrained = torch.load(args.weight_path, map_location=torch.device('cpu'))
 
     for k, v in net.state_dict().items():
-        print(f'k: {k[9:]} v: {v}')
-    print('pretrained')
-    for k, v in pretrained.module.state_dict().items():
-        print(f'k: {k}')
+        print(f'k: {k} ')
 
     '''
     for k, v in net.state_dict().items():
@@ -212,7 +209,7 @@ def main():
             state_dict[k] = v
             print(k)
     '''
-    net.load_state_dict(pretrained.module.state_dict())
+    net.load_state_dict(pretrained.module.state_dict(), strict=False)
     net.fc = nn.Linear(2048, NUM_CATEGORIES)
 
     ignored_params = list(map(id, net.features.parameters()))
