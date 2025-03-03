@@ -197,7 +197,7 @@ def main():
     pretrained = torch.load(args.weight_path, map_location=torch.device('cpu'))
 
     for k, v in net.state_dict().items():
-        print(f'k: {k} v: {v}')
+        print(f'k: {k[9:]} v: {v}')
     print('pretrained')
     for k, v in pretrained.module.state_dict().items():
         print(f'k: {k}')
