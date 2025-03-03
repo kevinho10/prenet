@@ -197,7 +197,9 @@ def main():
     pretrained = torch.load(args.weight_path, map_location=torch.device('cpu'))
 
     for k, v in net.state_dict().items():
-        print(f'k: {k} ')
+        print(f'k: {k[9:]} pre {pretrained[k[9:]]}')
+        if "xx" in k:
+            print(re.sub(r'xx[0-9]\.?',".", k[9:]))
 
     '''
     for k, v in net.state_dict().items():
