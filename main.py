@@ -195,6 +195,13 @@ def main():
     #net.fc = nn.Linear(2048, 2000)
     state_dict = {}
     pretrained = torch.load(args.weight_path, map_location=torch.device('cpu'))
+
+    for k, v in net.state_dict().items():
+        print(f'k: {k} v: {v}')
+    print('pretrained')
+    for k, v in pretrained.module.state_dict().items():
+        print(f'k: {k} v: {v}')
+
     '''
     for k, v in net.state_dict().items():
         if k[9:] in pretrained.module.state_dict().keys() and "fc" not in k:
@@ -205,7 +212,7 @@ def main():
             state_dict[k] = v
             print(k)
     '''
-    net.load_state_dict(pretrained.module.state_dict(), strict=False)
+    net.load_state_dict(pretrained.module.state_dict())
     net.fc = nn.Linear(2048, NUM_CATEGORIES)
 
     ignored_params = list(map(id, net.features.parameters()))
