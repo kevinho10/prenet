@@ -50,7 +50,8 @@ class self_attention(nn.Module):
 
     def forward(self, inputs):
         batch, N, H, W = inputs.shape
-        #print(inputs.shape)
+        N = N * 3
+        print(f'n - {N} attn in - {inputs.shape}')
         flat_q, flat_k, flat_v, q, k, v = self.compute_flat_qkv(inputs, self.q, self.k,self.v,self.Nh)
         #print(flat_q.shape)
         logits = torch.matmul(flat_q.transpose(2, 3), flat_k)
