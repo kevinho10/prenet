@@ -67,7 +67,7 @@ class self_attention(nn.Module):
         #print(attn_out.shape)
         attn_out = self.attn(attn_out)
         #print(attn_out.shape)
-
+        print(f'attnout {attn_out}')
         return attn_out
 
 
