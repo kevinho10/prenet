@@ -200,7 +200,7 @@ def main():
         print(f'k: {k} v: {v}')
     print('pretrained')
     for k, v in pretrained.module.state_dict().items():
-        print(f'k: {k} v: {v}')
+        print(f'k: {k}')
 
     '''
     for k, v in net.state_dict().items():
