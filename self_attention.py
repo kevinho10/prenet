@@ -7,7 +7,7 @@ class self_attention(nn.Module):
 
     def __init__(self, in_channels, out_channels, dk, dq, dv, Nh):
         super(self_attention, self).__init__()
-        self.Cin = in_channels
+        self.Cin = in_channels * 3
         self.Cout = out_channels
         self.dq = dq
         self.dk = dk
