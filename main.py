@@ -198,7 +198,10 @@ def main():
     
     for k, v in pretrained.module.state_dict().items():
         if k in net.state_dict().keys():
-            state_dict[k] = v
+            if 'sconv' in k and 'weight' in k:
+                state_dict[k] = v.resize_(1024, 1024, 3, 3)
+            else:
+                state_dict[k] = v
     
     '''
     for k, v in net.state_dict().items():
