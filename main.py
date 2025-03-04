@@ -279,7 +279,7 @@ def main():
         for (inputs, targets) in tqdm(test_loader):
             total += 1
             with torch.no_grad():
-                _, _, _, output_concat, o1, o2, o3 = net(inputs,useattn)
+                _, _, _, output_concat, o1, o2, o3 = net(inputs,True)
                 res = output_concat + o1 + o2 + o3
                 if numpy.argmax(res) == targets:
                     correct += 1
