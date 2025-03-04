@@ -236,9 +236,9 @@ def main():
                 outputs += (k + ': ' + str(v).ljust(10) + ' ')
         print(outputs)
 
-    #cudnn.benchmark = True
-    #net.cuda()
-    #net = nn.DataParallel(net)
+    cudnn.benchmark = True
+    net.cuda()
+    net = nn.DataParallel(net)
 
     if args.use_checkpoint:
         net.load_state_dict(torch.load(checkpath))
@@ -277,10 +277,15 @@ def main():
         correct = 0
         total = 0
         for (inputs, targets) in tqdm(test_loader):
+
+            inputs, targets = inputs.cuda(), targets.cuda()
+            inputs, targets = Variable(inputs), Variable(targets)
+            
             total += 1
             with torch.no_grad():
                 _, _, _, output_concat, o1, o2, o3 = net(inputs,True)
                 res = output_concat + o1 + o2 + o3
+                print(f'pred {res} - target {targets}')
                 if numpy.argmax(res) == targets:
                     correct += 1
         print(f'Correct: {correct} / {total}')
