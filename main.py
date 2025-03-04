@@ -276,7 +276,7 @@ def main():
 
         correct = 0
         total = 0
-        for (inputs, targets) in tqdm(testloader):
+        for (inputs, targets) in tqdm(test_loader):
             total += 1
             with torch.no_grad():
                 _, _, _, output_concat, o1, o2, o3 = net(inputs,useattn)
