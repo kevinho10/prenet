@@ -37,8 +37,10 @@ def parse_option():
                         help="The initial learning rate for SGD.")
     parser.add_argument("--epoch", default=200, type=int,
                         help="The number of epochs.")
-    parser.add_argument("--test", action='store_true',
-                        help="Testing model.")
+    parser.add_argument("--test_one", action='store_true',
+                        help="Classify an image")
+    parser.add_argument("--test_a_dataset", action='store_true',
+                        help="Test a dataset of images")
     parser.add_argument("--train", action='store_true',
                         help="Train model.")
     parser.add_argument("--food_img", help="Path to food image to predict.")
@@ -179,7 +181,7 @@ class PMG(nn.Module):
 model.PMG = PMG
 def main():
     args = parse_option()
-    if args.train:
+    if args.train or args.test_a_dataset:
         train_dataset, train_loader, test_dataset, test_loader = \
             load_data(image_path=args.image_path, train_dir=args.train_path, test_dir=args.test_path,batch_size=args.batchsize)
         print('Data Preparation : Finished')
@@ -245,7 +247,7 @@ def main():
         net.module.load_state_dict(torch.load(args.checkpoint).module.state_dict())
         print('load the checkpoint')
 
-    if args.test:
+    if args.test_one:
         #val_acc, val5_acc, val_acc_com, val5_acc_com, val_loss = test(net, nn.CrossEntropyLoss(), args.batchsize, test_loader, True)
         #print('Accuracy of the network on the val images: top1 = %.5f, top5 = %.5f, top1_combined = %.5f, top5_combined = %.5f, test_loss = %.6f\n' % (
         #        val_acc, val5_acc, val_acc_com, val5_acc_com, val_loss))
@@ -266,9 +268,22 @@ def main():
 
             _, _, _, output_concat, o1, o2, o3 = net(trans_img,True)
 
-        print(f'shape: {output_concat.shape}')
         print(f'type: {numpy.argmax(output_concat + o1 + o2 + o3)}')
         return
+
+    if args.test_a_dataset:
+        net.eval()
+
+        correct = 0
+        total = 0
+        for (inputs, targets) in tqdm(testloader):
+            total += 1
+            with torch.no_grad():
+                _, _, _, output_concat, o1, o2, o3 = net(inputs,useattn)
+                res = output_concat + o1 + o2 + o3
+                if numpy.argmax(res) == targets:
+                    correct += 1
+        print(f'Correct: {correct} / {total}')
 
     if args.train:
         train(nb_epoch=args.epoch,             # number of epoch
