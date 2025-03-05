@@ -286,8 +286,8 @@ def main():
                 _, _, _, output_concat, o1, o2, o3 = net(inputs,True)
                 res = output_concat + o1 + o2 + o3
                 v, i = torch.max(res,1)
-                print(f'pred {v} - target {targets}')
-                if v == targets:
+                print(f'pred {i} - target {targets}')
+                if i == targets:
                     correct += 1
         print(f'Correct: {correct} / {total}')
 
