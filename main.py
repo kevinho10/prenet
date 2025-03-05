@@ -285,7 +285,7 @@ def main():
             with torch.no_grad():
                 _, _, _, output_concat, o1, o2, o3 = net(inputs,True)
                 res = output_concat + o1 + o2 + o3
-                v, i = tarch.max(res,1)
+                v, i = torch.max(res,1)
                 print(f'pred {v} - target {targets}')
                 if v == targets:
                     correct += 1
