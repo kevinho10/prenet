@@ -299,7 +299,7 @@ def main():
                 v, i = torch.max(res,1)
                 predicted.append(i.item()) 
                 real.append(targets.item())
-                print(classification_report(real, predicted, names))
+                print(classification_report(real, predicted, target_names=names))
                 
         print(f'Correct: {correct} / {total}')
 
