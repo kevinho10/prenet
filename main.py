@@ -293,7 +293,6 @@ def main():
             inputs, targets = inputs.cuda(), targets.cuda()
             inputs, targets = Variable(inputs), Variable(targets)
 
-            total += 1
             with torch.no_grad():
                 _, _, _, output_concat, o1, o2, o3 = net(inputs,True)
                 res = output_concat + o1 + o2 + o3
