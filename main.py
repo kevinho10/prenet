@@ -237,9 +237,10 @@ def main():
                 outputs += (k + ': ' + str(v).ljust(10) + ' ')
         print(outputs)
 
-    cudnn.benchmark = True
-    net.cuda()
-    net = nn.DataParallel(net)
+    if args.train or args.test_a_dataset:
+        cudnn.benchmark = True
+        net.cuda()
+        net = nn.DataParallel(net)
 
     if args.use_checkpoint:
         net.load_state_dict(torch.load(checkpath))
@@ -286,7 +287,6 @@ def main():
 
         predicted = []
         real = []
-        cur_class = -1
 
         for (inputs, targets) in tqdm(test_loader):
 
@@ -299,9 +299,6 @@ def main():
                 v, i = torch.max(res,1)
                 predicted.append(i.item()) 
                 real.append(targets.item())
-                if cur_class != targets.item():
-                    cur_class = targets.item()
-                    print(f'/n pred {predicted} /n target {real}')
                 
         print(classification_report(real, predicted, target_names=names))
 
