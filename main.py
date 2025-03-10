@@ -237,6 +237,8 @@ def main():
                 outputs += (k + ': ' + str(v).ljust(10) + ' ')
         print(outputs)
 
+    torch.save(net.state_dict(), 'drive/MyDrive/Colab Notebooks/checkpoints')
+    
     if args.train or args.test_a_dataset:
         cudnn.benchmark = True
         net.cuda()
