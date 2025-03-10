@@ -237,7 +237,7 @@ def main():
                 outputs += (k + ': ' + str(v).ljust(10) + ' ')
         print(outputs)
 
-    torch.save(net.state_dict(), '../drive/MyDrive/Colab Notebooks/checkpoints')
+    torch.save(net.state_dict(), '../drive/MyDrive/Colab Notebooks/checkpoints/prenet.pth')
 
     if args.train or args.test_a_dataset:
         cudnn.benchmark = True
