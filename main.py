@@ -199,6 +199,7 @@ def main():
     state_dict = {}
     pretrained = torch.load(args.weight_path, map_location=torch.device('cpu'))
     
+    '''
     for k, v in pretrained.module.state_dict().items():
         if k in net.state_dict().keys():
             if 'sconv' in k and 'weight' in k:
@@ -206,7 +207,7 @@ def main():
             else:
                 state_dict[k] = v
     
-    '''
+    #original
     for k, v in net.state_dict().items():
         if k[9:] in pretrained.module.state_dict().keys() and "fc" not in k:
             state_dict[k] = pretrained[k[9:]]
@@ -216,7 +217,7 @@ def main():
             state_dict[k] = v
             print(k)
     '''
-    net.load_state_dict(state_dict, strict=False)
+    net.load_state_dict(pretrained)
     net.fc = nn.Linear(2048, NUM_CATEGORIES)
 
     ignored_params = list(map(id, net.features.parameters()))
@@ -275,7 +276,7 @@ def main():
 
     if args.test_a_dataset:
         net.eval()
-        names = ['Apple pie', 'Baby back ribs', 'Baklava', 'Beef carpaccio', 'Beef tartare', 'Beet salad', 'Beignets', 'Bibimbap', 'Bread pudding', 'Breakfast burrito', 'Bruschetta', 
+        food101_names = ['Apple pie', 'Baby back ribs', 'Baklava', 'Beef carpaccio', 'Beef tartare', 'Beet salad', 'Beignets', 'Bibimbap', 'Bread pudding', 'Breakfast burrito', 'Bruschetta', 
         'Caesar salad', 'Cannoli', 'Caprese salad', 'Carrot cake', 'Ceviche', 'Cheesecake', 'Cheese plate', 'Chicken curry', 'Chicken quesadilla', 'Chicken wings', 'Chocolate cake', 
         'Chocolate mousse', 'Churros', 'Clam chowder', 'Club sandwich', 'Crab cakes', 'Creme brulee', 'Croque madame', 'Cup cakes', 'Deviled eggs', 'Donuts', 'Dumplings', 'Edamame', 
         'Eggs benedict', 'Escargots', 'Falafel', 'Filet mignon', 'Fish and chips', 'Foie gras', 'French fries', 'French onion soup', 'French toast', 'Fried calamari', 'Fried rice', 
@@ -300,7 +301,7 @@ def main():
                 predicted.append(i.item()) 
                 real.append(targets.item())
                 
-        print(classification_report(real, predicted, target_names=names))
+        print(classification_report(real, predicted, target_names=food101_names))
 
     if args.train:
         train(nb_epoch=args.epoch,             # number of epoch
