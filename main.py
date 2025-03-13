@@ -199,14 +199,14 @@ def main():
     state_dict = {}
     pretrained = torch.load(args.weight_path, map_location=torch.device('cpu'))
     
-    '''
+
     for k, v in pretrained.module.state_dict().items():
         if k in net.state_dict().keys():
             if 'sconv' in k and 'weight' in k:
                 state_dict[k] = v.resize_(1024, 1024, 3, 3)
             else:
                 state_dict[k] = v
-    
+    '''
     #original
     for k, v in net.state_dict().items():
         if k[9:] in pretrained.module.state_dict().keys() and "fc" not in k:
@@ -217,7 +217,7 @@ def main():
             state_dict[k] = v
             print(k)
     '''
-    net.load_state_dict(pretrained)
+    net.load_state_dict(state_dict)
     net.fc = nn.Linear(2048, NUM_CATEGORIES)
 
     ignored_params = list(map(id, net.features.parameters()))
@@ -237,6 +237,7 @@ def main():
             else:
                 outputs += (k + ': ' + str(v).ljust(10) + ' ')
         print(outputs)
+    torch.save(net.module.state_dict(), '../drive/MyDrive/Colab Notebooks/checkpoints/prenet_wo_dp.pth')
 
     if args.train or args.test_a_dataset:
         cudnn.benchmark = True
