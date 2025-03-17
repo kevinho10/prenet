@@ -98,7 +98,7 @@ class PRENet(nn.Module):
         self.sconv3 = nn.Conv2d((self.num_ftrs // 2), self.num_ftrs // 2, kernel_size= 3, padding= 1)
         self.drop_block = DropBlock2D(block_size=3, drop_prob=0.5)
 
-    def forward(self, x, label):
+    def forward(self, x, label=True):
         xf1, xf2, xf3, xf4, xf5, xn = self.features(x)
         batch_size, _, _, _ = x.shape
 

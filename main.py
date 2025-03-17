@@ -269,7 +269,7 @@ def main():
 
         with torch.no_grad():
 
-            _, _, _, output_concat, o1, o2, o3 = net(trans_img,True)
+            _, _, _, output_concat, o1, o2, o3 = net(trans_img)
 
         print(f'type: {numpy.argmax(output_concat + o1 + o2 + o3)}')
         return
@@ -295,7 +295,7 @@ def main():
             inputs, targets = Variable(inputs), Variable(targets)
 
             with torch.no_grad():
-                _, _, _, output_concat, o1, o2, o3 = net(inputs,True)
+                _, _, _, output_concat, o1, o2, o3 = net(inputs)
                 res = output_concat + o1 + o2 + o3
                 v, i = torch.max(res,1)
                 predicted.append(i.item()) 
